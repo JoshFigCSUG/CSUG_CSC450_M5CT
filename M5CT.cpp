@@ -61,7 +61,8 @@ int main()
     inputFile.close(); // Close the input file
     outputFile2.close(); // Close the second output file
 
-    cout << "Content from CSC450_CT5_mod5.txt read, reversed line by line, and stored in CSC450-mod5-reverse.txt." << endl; // Confirms the reversal and storage operation
+    // Confirm the reversal and storage operation
+    cout << "Content from CSC450_CT5_mod5.txt read, reversed line by line, and stored in CSC450-mod5-reverse.txt." << endl;
 
     // Program pause
     cout << "\nPress 'Enter' key to end program." << endl;
