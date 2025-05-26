@@ -1,0 +1,78 @@
+start
+
+    // Declarations
+    STRING userInput
+    FILE_STREAM outputFile1
+    FILE_STREAM inputFile
+    FILE_STREAM outputFile2
+    STRING line
+    STRING reversedLine
+
+    // Prompt user to enter text
+    DISPLAY "Please enter the text you want to add to the file:"
+    USERINPUT → userInput
+
+    // Open the first file in append mode
+    OPEN_FILE "CSC450_CT5_mod5.txt" FOR APPEND AS outputFile1
+
+    // Check if the first output file failed to open
+    IF (outputFile1 IS NOT OPEN) THEN
+        DISPLAY "Error: Could not open CSC450_CT5_mod5.txt for appending."
+        RETURN 1 // Indicate unsuccessful program termination.
+    ENDIF
+
+    // Write the user input to the first file
+    WRITE userInput TO outputFile1
+    WRITE NEWLINE TO outputFile1
+
+    // Close the first output file
+    CLOSE outputFile1
+    DISPLAY "User input appended to CSC450_CT5_mod5.txt."
+
+    // Open the first file for reading
+    OPEN_FILE "CSC450_CT5_mod5.txt" FOR READ AS inputFile
+
+    // Check if the input file failed to open
+    IF (inputFile IS NOT OPEN) THEN
+        DISPLAY "Error: Could not open CSC450_CT5_mod5.txt for reading."
+        RETURN 1 // Indicate unsuccessful program termination.
+    ENDIF
+
+    // Open the second file for writing
+    OPEN_FILE "CSC450-mod5-reverse.txt" FOR WRITE AS outputFile2
+
+    // Check if the second output file failed to open
+    IF (outputFile2 IS NOT OPEN) THEN
+        DISPLAY "Error: Could not open CSC450-mod5-reverse.txt for writing."
+        CLOSE inputFile // Close the input file before exiting
+        RETURN 1 // Indicate unsuccessful program termination.
+    ENDIF
+
+    // Read each line from the input file until the end
+    WHILE (READ_LINE FROM inputFile INTO line) DO
+        reversedLine = "" // Reset the reversedLine for each new line
+
+        // Loop through the current line from end to beginning
+        FOR i FROM (LENGTH OF line - 1) DOWNTO 0 DO
+            reversedLine = reversedLine + CHARACTER AT INDEX i OF line // Append each character to reversedLine, effectively reversing it
+        ENDFOR
+
+        // Write the reversed line to the second output file
+        WRITE reversedLine TO outputFile2
+        WRITE NEWLINE TO outputFile2
+    ENDWHILE
+
+    // Close the input file
+    CLOSE inputFile
+    // Close the second output file
+    CLOSE outputFile2
+
+    DISPLAY "Content from CSC450_CT5_mod5.txt read, reversed line by line, and stored in CSC450-mod5-reverse.txt."
+
+    // Program pause
+    DISPLAY "\nPress 'Enter' key to end program."
+    WAIT_FOR_KEY_PRESS
+
+    RETURN 0 // Indicate successful program termination.
+
+stop
